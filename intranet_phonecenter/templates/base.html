@@ -54,7 +54,12 @@
           {% if request.user.is_teammember %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
+              <a class="nav-link" href="{% url 'calls:call_list' %}">Mes appels</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:call_list_waiting' %}">Appels non attribués</a>
             </li>
           </ul>
           {% endif %}

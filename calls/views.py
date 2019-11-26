@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from .forms import NewCallForm, NewCallCustomerForm
+from .forms import NewCallForm, NewCallCustomerForm, CallFormAssign
 from .models import Call
 
 def is_teammember(user=None):
@@ -19,6 +19,17 @@ def is_customer(user=None):
 @user_passes_test(is_teammember)
 def call_list(request):
     calls = Call.objects.filter(teammember = request.user.teammember).order_by("-solved", "-created")
+    return render(
+        request,
+        'calls/call_list.html',
+        {
+            'calls': calls,
+        }
+    )
+
+@user_passes_test(is_teammember)
+def call_list_waiting(request):
+    calls = Call.objects.filter(teammember = None)
     return render(
         request,
         'calls/call_list.html',
@@ -45,6 +56,24 @@ def call_edit(request, call_id=None):
         'utils/form.html',
         {
             'title': "Appel",
+            'form':form,
+        }
+    )
+
+@user_passes_test(is_teammember)
+def call_assign(request, call_id):
+    call = Call.objects.get(id = call_id, teammember = None)
+    print(call)
+    form = CallFormAssign(request.POST, instance = call)
+    if form.is_valid():
+        if not call:
+            form.instance.teammember = request.user.teammember
+        form.save()
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Affectation d'appel",
             'form':form,
         }
     )
