@@ -48,6 +48,13 @@ class UserProfile(AbstractUser, BaseModel):
         verbose_name_plural = "Utilisateurs"
         ordering = ("created", )
 
+    def is_teammember(self):
+        return self.user_type == 1
+
+    def is_customer(self):
+        return self.user_type == 2
+
+
 class TeamMember(BaseModel):
 
     teammember = models.OneToOneField(
