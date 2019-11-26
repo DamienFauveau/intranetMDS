@@ -90,6 +90,14 @@ class Call(BaseModel):
         db_index=True,
         )
 
+    note = models.PositiveSmallIntegerField(
+        null=True,
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ]
+        )
+
     def __str__(self):
         return self.title
 

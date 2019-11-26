@@ -35,3 +35,9 @@ class CallFormAssign(ModelFormWithSubmit):
     class Meta:
         model = Call
         fields = ('teammember', )
+
+class NoteCallCustomerForm(ModelFormWithSubmit):
+
+    class Meta:
+        model = Call
+        fields = ('note', )

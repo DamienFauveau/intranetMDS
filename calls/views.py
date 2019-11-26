@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from .forms import NewCallForm, NewCallCustomerForm, CallFormAssign
+from .forms import NewCallForm, NewCallCustomerForm, CallFormAssign, NoteCallCustomerForm
 from .models import Call
 
 def is_teammember(user=None):
@@ -120,6 +120,37 @@ def call_edit_customer(request, call_id):
             form.save()
     else:
         form = NewCallCustomerForm(instance = call)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Appel",
+            'form':form,
+        }
+    )
+
+@user_passes_test(is_customer)
+def call_list_customer_solved(request):
+    calls = Call.objects.filter(customer = request.user.customer, solved = True, note = None).order_by("-created")
+    return render(
+        request,
+        'calls/call_list_customer_solved.html',
+        {
+            'calls': calls,
+        }
+    )
+
+@user_passes_test(is_customer)
+def call_customer_note(request, call_id):
+    call = Call.objects.get(id = call_id, customer = request.user.customer, solved = True)
+    if request.method == 'POST':
+        form = NoteCallCustomerForm(request.POST, instance = call)
+        if form.is_valid():
+            if not call:
+                form.instance.customer = request.user.customer
+            form.save()
+    else:
+        form = NoteCallCustomerForm(instance = call)
     return render(
         request,
         'utils/form.html',

@@ -52,7 +52,12 @@
           </ul>
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list_customer' %}">Mes appels</a>
+              <a class="nav-link" href="{% url 'calls:call_list_customer' %}">Mes appels en cours</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:call_list_customer_solved' %}">Mes appels résolus</a>
             </li>
           </ul>
           {% endif %}

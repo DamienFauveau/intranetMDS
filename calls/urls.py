@@ -22,5 +22,7 @@ urlpatterns = [
     # customer
     path('new_call_customer/', views.new_call_customer, name="new_call_customer"),
     path('call_list_customer/', views.call_list_customer, name="call_list_customer"),
+    path('call_list_customer_solved/', views.call_list_customer_solved, name="call_list_customer_solved"),
     path('call_edit_customer-<int:call_id>/', views.call_edit_customer, name="call_edit_customer"),
+    path('call_customer_note-<int:call_id>/', views.call_customer_note, name="call_customer_note"),
 ]

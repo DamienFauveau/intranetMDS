@@ -13,9 +13,8 @@
             <tr>
                 <th scope="col">Appel</th>
                 <th scope="col">Client</th>
-                <th scope="col">
-                    Résolu
-                </th>
+                <th scope="col">Résolu</th>
+                <th scope="col">Note</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
             </tr>
@@ -30,6 +29,11 @@
                         ✅
                     {% else %}
                         ❌
+                    {% endif %}
+                </td>
+                <td>
+                    {% if call.solved %}
+                        {{ call.note }}
                     {% endif %}
                 </td>
                 <td>
