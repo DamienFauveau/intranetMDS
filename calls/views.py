@@ -29,10 +29,10 @@ def call_list(request):
 
 @user_passes_test(is_teammember)
 def call_list_waiting(request):
-    calls = Call.objects.filter(teammember = None)
+    calls = Call.objects.filter(teammember = None).order_by("-created")
     return render(
         request,
-        'calls/call_list.html',
+        'calls/call_list_waiting.html',
         {
             'calls': calls,
         }
@@ -63,12 +63,14 @@ def call_edit(request, call_id=None):
 @user_passes_test(is_teammember)
 def call_assign(request, call_id):
     call = Call.objects.get(id = call_id, teammember = None)
-    print(call)
-    form = CallFormAssign(request.POST, instance = call)
-    if form.is_valid():
-        if not call:
-            form.instance.teammember = request.user.teammember
-        form.save()
+    if request.method == 'POST':
+        form = CallFormAssign(request.POST, instance = call)
+        if form.is_valid():
+            if not call:
+                form.instance.teammember = request.user.teammember
+            form.save()
+    else:
+        form = CallFormAssign(instance = call)
     return render(
         request,
         'utils/form.html',
@@ -92,6 +94,37 @@ def new_call_customer(request):
         'utils/form.html',
         {
             'title': "Nouvel Appel",
+            'form':form,
+        }
+    )
+
+@user_passes_test(is_customer)
+def call_list_customer(request):
+    calls = Call.objects.filter(customer = request.user.customer, solved = False).order_by("-created")
+    return render(
+        request,
+        'calls/call_list_customer.html',
+        {
+            'calls': calls,
+        }
+    )
+
+@user_passes_test(is_customer)
+def call_edit_customer(request, call_id):
+    call = Call.objects.get(id = call_id, customer = request.user.customer, solved = False)
+    if request.method == 'POST':
+        form = NewCallCustomerForm(request.POST, instance = call)
+        if form.is_valid():
+            if not call:
+                form.instance.customer = request.user.customer
+            form.save()
+    else:
+        form = NewCallCustomerForm(instance = call)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Appel",
             'form':form,
         }
     )
