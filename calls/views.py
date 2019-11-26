@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import NewCallForm, NewCallCustomerForm, CallFormAssign, NoteCallCustomerForm
 from .models import Call
 
+def is_superuser(user=None):
+    if user == None:
+        return False
+    return user.is_superuser
+
 def is_teammember(user=None):
     if user == None:
         return False
@@ -16,6 +21,19 @@ def is_customer(user=None):
         return False
     return user.is_customer
 
+############## Super User ##############
+@user_passes_test(is_superuser)
+def call_list_well_noted(request):
+    calls = Call.objects.filter(note__gt = 2, solved = True).order_by("-solved", "-created")
+    return render(
+        request,
+        'calls/call_list_well_noted.html',
+        {
+            'calls': calls,
+        }
+    )
+
+############## Team Member ##############
 @user_passes_test(is_teammember)
 def call_list(request):
     calls = Call.objects.filter(teammember = request.user.teammember).order_by("-solved", "-created")
@@ -80,6 +98,7 @@ def call_assign(request, call_id):
         }
     )
 
+############## Customer ##############
 @user_passes_test(is_customer)
 def new_call_customer(request):
     if request.method == 'POST':

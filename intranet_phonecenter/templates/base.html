@@ -43,35 +43,40 @@
                 <a class="nav-link" href="{% url 'users:role_attribution' %}">Attribuer des rôles</a>
               </li>
             </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'calls:call_list_well_noted' %}">Appels bien notés</a>
+                </li>
+              </ul>
           {% endif %}
           {% if request.user.is_customer %}
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:new_call_customer' %}">Ajouter un appel</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list_customer' %}">Mes appels en cours</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list_customer_solved' %}">Mes appels résolus</a>
-            </li>
-          </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:new_call_customer' %}">Ajouter un appel</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:call_list_customer' %}">Mes appels en cours</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:call_list_customer_solved' %}">Mes appels résolus</a>
+              </li>
+            </ul>
           {% endif %}
           {% if request.user.is_teammember %}
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list' %}">Mes appels</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'calls:call_list_waiting' %}">Appels non attribués</a>
-            </li>
-          </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:call_list' %}">Mes appels</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:call_list_waiting' %}">Appels non attribués</a>
+              </li>
+            </ul>
           {% endif %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">

@@ -12,7 +12,7 @@ class NewCallForm(ModelFormWithSubmit):
 
     class Meta:
         model = Call
-        fields = ('title', 'call_category', 'customer', 'tags', 'content', 'solved', )
+        fields = ('title', 'call_category', 'customer', 'tags', 'content', 'note', 'solved', )
 
 class NewCallCustomerForm(ModelFormWithSubmit):
 
@@ -26,11 +26,6 @@ class NewCallCustomerForm(ModelFormWithSubmit):
         fields = ('title', 'call_category', 'tags', 'content', )
 
 class CallFormAssign(ModelFormWithSubmit):
-
-    tags = forms.ModelMultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
-        queryset=CallTag.objects.all(),
-        )
 
     class Meta:
         model = Call

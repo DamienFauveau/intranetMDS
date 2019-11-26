@@ -8,6 +8,9 @@ from .models import Call
 app_name = 'calls'
 
 urlpatterns = [
+    # superuser
+    path('call_list_well_noted/', views.call_list_well_noted, name="call_list_well_noted"),
+
     # teammember
     path('new_call/', views.call_edit, name="new_call"),
     path('call_list/', views.call_list, name="call_list"),

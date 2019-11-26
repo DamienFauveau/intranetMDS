@@ -48,6 +48,9 @@ class UserProfile(AbstractUser, BaseModel):
         verbose_name_plural = "Utilisateurs"
         ordering = ("created", )
 
+    def is_superuser(self):
+        return self.is_superuser
+
     def is_teammember(self):
         return self.user_type == 1
 
